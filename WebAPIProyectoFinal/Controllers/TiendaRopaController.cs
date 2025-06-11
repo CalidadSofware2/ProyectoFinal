@@ -113,8 +113,9 @@ namespace WebAPIProyectoFinal.Controllers
                 .ToListAsync();
         }
 
-        [HttpPost("detalle")]
-        public async Task<ActionResult<InventarioDetalle>> CrearDetalle(InventarioDetalle detalle)
+
+        [HttpPost("detallevalidado")]
+        public async Task<ActionResult<InventarioDetalle>> CrearDetallevalida(InventarioDetalle detalle)
         {
             // Validar existencia de producto e inventario
             var productoExiste = await _context.Productos.AnyAsync(p => p.IdProducto == detalle.ProductoidProducto);
@@ -122,12 +123,39 @@ namespace WebAPIProyectoFinal.Controllers
 
             if (!productoExiste || !inventarioExiste)
             {
-                return BadRequest("Producto o inventario no existe.");
+                return BadRequest("El producto o el inventario no existen.");
             }
+
+            // Validar que la combinación producto-inventario no exista ya en InventarioDetalle
+            var existeDetalle = await _context.InventarioDetalles
+                .AnyAsync(d => d.ProductoidProducto == detalle.ProductoidProducto &&
+                               d.InventarioidInventario == detalle.InventarioidInventario);
+
+            if (existeDetalle)
+            {
+                return BadRequest("Ya existe un inventario detalle con ese producto e inventario.");
+            }
+
+            // Agregar nuevo detalle si todo es válido
             _context.InventarioDetalles.Add(detalle);
             await _context.SaveChangesAsync();
             return Ok(detalle);
         }
+        //[HttpPost("detalle")]
+        //public async Task<ActionResult<InventarioDetalle>> CrearDetalle(InventarioDetalle detalle)
+        //{
+        //    // Validar existencia de producto e inventario
+        //    var productoExiste = await _context.Productos.AnyAsync(p => p.IdProducto == detalle.ProductoidProducto);
+        //    var inventarioExiste = await _context.Inventarios.AnyAsync(i => i.IdInventario == detalle.InventarioidInventario);
+
+        //    if (!productoExiste || !inventarioExiste)
+        //    {
+        //        return BadRequest("Producto o inventario no existe.");
+        //    }
+        //    _context.InventarioDetalles.Add(detalle);
+        //    await _context.SaveChangesAsync();
+        //    return Ok(detalle);
+        //}
 
         [HttpPut("detalle")]
         public async Task<IActionResult> ActualizarDetalle(InventarioDetalle detalle)
@@ -159,22 +187,11 @@ namespace WebAPIProyectoFinal.Controllers
         }
 
 
-        [HttpPost("detalleprueba")]
-        public async Task<ActionResult<InventarioDetalle>> CrearDetalle([FromBody] InventarioDetalleDTO dto)
-        {
-            var detalle = new InventarioDetalle
-            {
-                ProductoidProducto = dto.ProductoidProducto,
-                InventarioidInventario = dto.InventarioidInventario,
-                Cantidad = dto.Cantidad,
-                Total = dto.Total
-            };
+       
 
-            _context.InventarioDetalles.Add(detalle);
-            await _context.SaveChangesAsync();
 
-            return Ok(detalle);
-        }
+       
+
     }
 
 }
