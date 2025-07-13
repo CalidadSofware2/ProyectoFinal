@@ -1,0 +1,46 @@
+{
+	"id": "5637efec-829a-4a93-a687-a956bf585ace",
+	"name": "Pruebas API TiendaRopa",
+	"timestamp": "2025-07-13T00:23:40.489Z",
+	"collection_id": "45146681-9b0542c0-f9b8-462f-864c-eb3085c2f584",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 0,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2025-07-13T00:23:39.447Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "ec24912d-b8ad-460e-93aa-c06dbf22842f",
+			"name": "GET Producto",
+			"url": "https://localhost:44375/api/TiendaRopa/producto",
+			"time": 25,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				47,
+				25
+			],
+			"allTests": [
+				{},
+				{}
+			]
+		}
+	],
+	"count": 2,
+	"totalTime": 72,
+	"collection": {
+		"requests": [
+			{
+				"id": "ec24912d-b8ad-460e-93aa-c06dbf22842f",
+				"method": "GET"
+			}
+		]
+	}
+}

@@ -1,0 +1,46 @@
+{
+	"id": "55e691dd-766a-4db4-be18-a5775d0f80f0",
+	"name": "Pruebas API TiendaRopa",
+	"timestamp": "2025-07-12T23:59:47.816Z",
+	"collection_id": "45146681-e9275225-0bb4-4a59-ad33-97650483d3ba",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 0,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2025-07-12T23:59:47.332Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "63caf1b5-abf7-4b17-a15b-27476ac7385d",
+			"name": "GET Inventario",
+			"url": "https://localhost:44375/api/TiendaRopa/inventario",
+			"time": 10,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				20,
+				10
+			],
+			"allTests": [
+				{},
+				{}
+			]
+		}
+	],
+	"count": 2,
+	"totalTime": 30,
+	"collection": {
+		"requests": [
+			{
+				"id": "63caf1b5-abf7-4b17-a15b-27476ac7385d",
+				"method": "GET"
+			}
+		]
+	}
+}
