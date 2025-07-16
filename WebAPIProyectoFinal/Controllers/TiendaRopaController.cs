@@ -74,7 +74,7 @@ namespace WebAPIProyectoFinal.Controllers
             if (producto == null) return NotFound();
             return producto;
         }
-
+        // prueba
         [HttpPost("producto")]
         public async Task<ActionResult<Producto>> CrearProducto(Producto producto)
         {
