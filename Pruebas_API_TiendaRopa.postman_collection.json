@@ -1,0 +1,320 @@
+{
+	"info": {
+		"_postman_id": "c0ea7763-6f97-4217-9c60-d929e33c6240",
+		"name": "Pruebas API TiendaRopa",
+		"description": "Colección para medir tiempos, errores y códigos HTTP en /api/TiendaRopa/inventario",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46507136"
+	},
+	"item": [
+		{
+			"name": "GET Inventario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44364/api/TiendaRopa/inventario",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44364",
+					"path": [
+						"api",
+						"TiendaRopa",
+						"inventario"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET inventario_id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44364/api/TiendaRopa/inventario/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44364",
+					"path": [
+						"api",
+						"TiendaRopa",
+						"inventario",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Producto",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44364/api/TiendaRopa/producto",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44364",
+					"path": [
+						"api",
+						"TiendaRopa",
+						"producto"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Producto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nombre\": \"pruebas\",\n  \"precio\": 250,\n  \"descripcion\": \"test postman\",\n  \"cantidadStock\": 25\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44364/api/TiendaRopa/producto",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44364",
+					"path": [
+						"api",
+						"TiendaRopa",
+						"producto"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Inventario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \n  \"fecha\": \"2025-07-06\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44364/api/TiendaRopa/inventario",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44364",
+					"path": [
+						"api",
+						"TiendaRopa",
+						"inventario"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"// Variables acumulativas\r",
+					"pm.environment.set(\"isLastRequest\", \"true\");\r",
+					"let totalRequests = parseInt(pm.environment.get(\"totalRequests\") || 0);\r",
+					"let totalErrors = parseInt(pm.environment.get(\"totalErrors\") || 0);\r",
+					"let responseTimes = JSON.parse(pm.environment.get(\"responseTimes\") || \"[]\");\r",
+					"let statusCodes = JSON.parse(pm.environment.get(\"statusCodes\") || \"{}\");\r",
+					"\r",
+					"// Tiempo de respuesta actual\r",
+					"const currentTime = pm.response.responseTime;\r",
+					"responseTimes.push(currentTime);\r",
+					"\r",
+					"// Contar errores si código >= 400\r",
+					"if (pm.response.code >= 400) {\r",
+					"    totalErrors += 1;\r",
+					"}\r",
+					"\r",
+					"// Contar códigos HTTP\r",
+					"let code = pm.response.code.toString();\r",
+					"statusCodes[code] = (statusCodes[code] || 0) + 1;\r",
+					"\r",
+					"// Actualizar variables de entorno\r",
+					"pm.environment.set(\"totalRequests\", totalRequests + 1);\r",
+					"pm.environment.set(\"totalErrors\", totalErrors);\r",
+					"pm.environment.set(\"responseTimes\", JSON.stringify(responseTimes));\r",
+					"pm.environment.set(\"statusCodes\", JSON.stringify(statusCodes));\r",
+					"\r",
+					"// Mostrar métricas si es el último request\r",
+					"if (pm.environment.get(\"isLastRequest\") === \"true\") {\r",
+					"    const sum = responseTimes.reduce((a, b) => a + b, 0);\r",
+					"    const avg = (sum / responseTimes.length).toFixed(2);\r",
+					"    const min = Math.min(...responseTimes);\r",
+					"    const max = Math.max(...responseTimes);\r",
+					"    const errorRate = ((totalErrors / responseTimes.length) * 100).toFixed(2);\r",
+					"    const packetLoss = ((statusCodes[\"0\"] || 0) / responseTimes.length * 100).toFixed(2);\r",
+					"\r",
+					"    // Mostrar resultados con pm.test\r",
+					"    pm.test(\" Resultados de la colección\", function () {\r",
+					"        pm.expect(true).to.be.true; // Dummy para mostrar sección\r",
+					"    });\r",
+					"\r",
+					"    pm.test(` Total de peticiones: ${responseTimes.length}`, function () {});\r",
+					"    pm.test(` Tiempo de respuesta promedio: ${avg} ms`, function () {});\r",
+					"    pm.test(` Tiempo mínimo: ${min} ms`, function () {});\r",
+					"    pm.test(` Tiempo máximo: ${max} ms`, function () {});\r",
+					"    pm.test(` Tasa de errores: ${errorRate}%`, function () {});\r",
+					"    pm.test(` Pérdida de paquetes simulada: ${packetLoss}%`, function () {});\r",
+					"\r",
+					"    // Mostrar códigos HTTP\r",
+					"    Object.keys(statusCodes).forEach(code => {\r",
+					"        pm.test(` Código HTTP ${code}: ${statusCodes[code]} veces`, function () {});\r",
+					"    });\r",
+					"}\r",
+					"pm.environment.set(\"isLastRequest\", \"true\");\r",
+					""
+				]
+			}
+		}
+	]
+}
