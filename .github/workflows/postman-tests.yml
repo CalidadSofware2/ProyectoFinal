@@ -1,0 +1,41 @@
+name: Pruebas API TiendaRopa
+on:
+ push:
+   branches: [ master ]
+ pull_request:
+   branches: [ master ]
+jobs:
+ test-api:
+   runs-on: ubuntu-latest
+   steps:
+   - name: Clonar repositorio
+     uses: actions/checkout@v3
+   - name: Configurar .NET Core
+     uses: actions/setup-dotnet@v4
+     with:
+       dotnet-version: '7.0.x' # Cambia si usas otra versión
+   - name: Restaurar y compilar proyecto
+     run: |
+       dotnet restore WebAPIProyectoFinal/WebAPIProyectoFinal.csproj
+       dotnet build WebAPIProyectoFinal/WebAPIProyectoFinal.csproj --no-restore
+   - name: Ejecutar API en segundo plano
+     run: |
+       dotnet run --project WebAPIProyectoFinal/WebAPIProyectoFinal.csproj &
+       sleep 10
+     env:
+       ASPNETCORE_ENVIRONMENT: Development
+   - name: Instalar Newman
+     run: npm install -g newman
+   - name: Ejecutar pruebas Postman
+     run: |
+       newman run "Pruebas_API_TiendaRopa.postman_collection.json" \
+         --insecure \
+         --reporters cli,json,html \
+         --reporter-json-export newman/results.json \
+         --reporter-html-export newman/report.html
+   - name: Subir reportes
+     if: always()
+     uses: actions/upload-artifact@v3
+     with:
+       name: reportes-newman
+       path: newman/
