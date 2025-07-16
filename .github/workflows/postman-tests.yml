@@ -1,41 +1,55 @@
 name: Pruebas API TiendaRopa
+
 on:
- push:
-   branches: [ master ]
- pull_request:
-   branches: [ master ]
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
 jobs:
- test-api:
-   runs-on: ubuntu-latest
-   steps:
-   - name: Clonar repositorio
-     uses: actions/checkout@v3
-   - name: Configurar .NET Core
-     uses: actions/setup-dotnet@v4
-     with:
-       dotnet-version: '9.0' # Cambia si usas otra versión
-   - name: Restaurar y compilar proyecto
-     run: |
-       dotnet restore WebAPIProyectoFinal/WebAPIProyectoFinal.csproj
-       dotnet build WebAPIProyectoFinal/WebAPIProyectoFinal.csproj --no-restore
-   - name: Ejecutar API en segundo plano
-     run: |
-       dotnet run --project WebAPIProyectoFinal/WebAPIProyectoFinal.csproj &
-       sleep 10
-     env:
-       ASPNETCORE_ENVIRONMENT: Development
-   - name: Instalar Newman
-     run: npm install -g newman
-   - name: Ejecutar pruebas Postman
-     run: |
-       newman run "Pruebas_API_TiendaRopa.postman_collection.json" \
-         --insecure \
-         --reporters cli,json,html \
-         --reporter-json-export newman/results.json \
-         --reporter-html-export newman/report.html
-   - name: Subir reportes
-     if: always()
-     uses: actions/upload-artifact@v4
-     with:
-       name: reportes-newman
-       path: newman/
+  test-api:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clonar repositorio
+      uses: actions/checkout@v3
+
+    - name: Configurar .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0'  # Ajusta según tu versión de .NET
+
+    - name: Restaurar dependencias
+      run: dotnet restore WebAPIProyectoFinal/WebAPIProyectoFinal.csproj
+
+    - name: Publicar API (modo release)
+      run: dotnet publish WebAPIProyectoFinal/WebAPIProyectoFinal.csproj -c Release -o out
+
+    - name: Ejecutar API en segundo plano
+      run: |
+        nohup dotnet WebAPIProyectoFinal.dll --urls=http://localhost:5200 &> api.log &
+        sleep 10
+      working-directory: ./out
+
+    - name: Verificar que la API responde
+      run: |
+        curl http://localhost:5200 || exit 1
+
+    - name: Instalar Newman y HTML Reporter
+      run: |
+        npm install -g newman newman-reporter-html
+
+    - name: Ejecutar pruebas Postman
+      run: |
+        mkdir -p newman
+        newman run "Pruebas_API_TiendaRopa.postman_collection.json" \
+          --reporters cli,json,html \
+          --reporter-json-export newman/results.json \
+          --reporter-html-export newman/report.html
+
+    - name: Subir reportes de Newman
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: reportes-newman
+        path: newman/
