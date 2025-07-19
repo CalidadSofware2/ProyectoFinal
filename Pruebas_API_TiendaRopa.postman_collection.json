@@ -310,8 +310,8 @@
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "https://babe1fbf3d7a.ngrok-free.app",
-			"type": "string"
+			"value": "https://babe1fbf3d7a.ngrok-free.app",  // VARIABLE CREADA PARA CADA GET O POST
+			"type": "string"				// SE DEBE CAMBIAR CON URL NUEVA DE NGROK 
 		}
 	]
 }
