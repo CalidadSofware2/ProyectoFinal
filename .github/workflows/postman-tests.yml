@@ -14,35 +14,23 @@ jobs:
     - name: Clonar repositorio
       uses: actions/checkout@v3
 
-    - name: Configurar .NET Core
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '9.0'  # Ajusta según tu versión de .NET
 
-    - name: Restaurar dependencias
-      run: dotnet restore WebAPIProyectoFinal/WebAPIProyectoFinal.csproj
-
-    - name: Publicar API (modo release)
-      run: dotnet publish WebAPIProyectoFinal/WebAPIProyectoFinal.csproj -c Release -o out
-
-    - name: Ejecutar API en segundo plano
+    - name: Verificar que la API en ngrok responde
       run: |
-        nohup dotnet WebAPIProyectoFinal.dll --urls=http://localhost:5200 &> api.log &
-        sleep 10
-      working-directory: ./out
-
-    - name: Verificar que la API responde
-      run: |
-        curl http://localhost:5200 || exit 1
+        echo "Verificando que la API en $NGROK_URL responde..."
+        curl --fail $NGROK_URL || exit 1
+      env:
+        NGROK_URL: ${{ secrets.NGROK_URL }}
 
     - name: Instalar Newman y HTML Reporter
       run: |
         npm install -g newman newman-reporter-html
 
-    - name: Ejecutar pruebas Postman
+    - name: Ejecutar pruebas Postman (contra ngrok)
       run: |
         mkdir -p newman
         newman run "Pruebas_API_TiendaRopa.postman_collection.json" \
+          --env-var "base_url=${{ secrets.NGROK_URL }}" \
           --reporters cli,json,html \
           --reporter-json-export newman/results.json \
           --reporter-html-export newman/report.html
