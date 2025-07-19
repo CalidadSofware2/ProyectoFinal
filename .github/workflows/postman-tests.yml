@@ -30,7 +30,7 @@ jobs:
       run: |
         mkdir -p newman
         newman run "Pruebas_API_TiendaRopa.postman_collection.json" \
-          --env-var "base_url=${{ secrets.NGROK_URL }}" \
+          --env-var "base_url=${{ secrets.NGROK_URL }}" \ #url variable secreta para nuevas ejecuciónes ngrok
           --reporters cli,json,html \
           --reporter-json-export newman/results.json \
           --reporter-html-export newman/report.html
