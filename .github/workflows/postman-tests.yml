@@ -19,8 +19,8 @@ jobs:
 
     - name: Verificar que la API en ngrok responde
       run: |
-        echo "Verificando que la API en $NGROK_URL responde..."
-        curl --fail $NGROK_URL || exit 1
+        echo "Verificando que la API en $NGROK_URL/health responde..."
+        curl --fail "$NGROK_URL/health" || exit 1
       env:
         NGROK_URL: ${{ secrets.NGROK_URL }}
 
@@ -29,7 +29,6 @@ jobs:
         npm install -g newman newman-reporter-html
 
     - name: Ejecutar pruebas Postman (contra ngrok)
-      continue-on-error: true
       run: |
         mkdir -p newman
         newman run "Pruebas_API_TiendaRopa.postman_collection.json" \
@@ -41,7 +40,7 @@ jobs:
     - name: Verificar archivos generados
       run: ls -la newman
 
-    - name: Ver contenido parcial (si existe)
+    - name: Mostrar contenido parcial de resultados
       run: cat newman/results.json || echo "Archivo no creado"
 
     - name: Subir reportes de Newman
