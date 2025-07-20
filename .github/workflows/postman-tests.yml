@@ -35,6 +35,9 @@ jobs:
           --reporter-json-export newman/results.json \
           --reporter-html-export newman/report.html
 
+    - name: Verificar archivos generados
+      run: ls -la newman
+
     - name: Subir reportes de Newman
       if: always()
       uses: actions/upload-artifact@v4
